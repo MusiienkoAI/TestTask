@@ -1,0 +1,122 @@
+// Android Gradle Plugin out of the box only supports code coverage for instrumentation (espresso) tests. This adds support for unit tests as well.
+project.afterEvaluate {
+    // Grab all build types and product flavors
+    def buildTypes = android.buildTypes.collect { type -> type.name }
+    def productFlavors = android.productFlavors.collect { flavor -> flavor.name }
+
+    println("jacoco: buildTypes: \"$buildTypes\", productFlavors: \"$productFlavors\", project build directory: \"${project.buildDir}\", project.childProjects: \"${rootProject.childProjects}\"")
+    // When no product flavors defined, use empty so that the for loop below can continue.
+    if (!productFlavors) productFlavors.add('')
+
+    def excludedProjects = ["test_utilities"]
+
+    def modules = []
+
+    rootProject.childProjects.forEach({ key, value ->
+        if (!excludedProjects.contains(value.name)) modules.add(value.name)
+    })
+
+    println("jacoco: modules: $modules")
+
+    productFlavors.each { productFlavorName ->
+        buildTypes.each { buildTypeName ->
+
+            println("jacoco: prepairing for flavor: \"$productFlavorName\", buildType: \"$buildTypeName\"")
+
+            def sourceName, sourcePath
+            if (!productFlavorName) {
+                sourceName = sourcePath = "${buildTypeName}"
+            } else {
+                sourceName = "${productFlavorName}${buildTypeName.capitalize()}"
+                sourcePath = "${productFlavorName}/${buildTypeName}"
+            }
+
+            println("jacoco: for flavor: \"$productFlavorName\" and build type: \"$buildTypeName\": sourceName: \"$sourceName\", sourcePath: \"$sourcePath\"")
+
+            def testTaskName = "test${sourceName.capitalize()}UnitTest"
+            def unitTestCoverageTaskName = "${testTaskName}Coverage"
+            def unitAndEspressoTestCoverageTaskName = "unitAndEspresso${sourceName.capitalize()}TestCoverage"
+
+            println("jacoco: testTaskName: \"$testTaskName\", unitTestCoverageTaskName: \"$unitTestCoverageTaskName\", unitAndEspressoTestCoverageTaskName: \"$unitAndEspressoTestCoverageTaskName\"")
+
+
+            def fileFilter = ['**/R.class', // Android generated classes
+                              '**/R$*.class', // Android generated classes
+                              '**/*Dagger*.*', // Dagger auto-generated code.
+                              '**/*MembersInjector*.*', // Dagger auto-generated code.
+                              '**/*_Factory.*', // Dagger auto-generated code.
+                              '**/*_Provide*Factory*.*', // Dagger auto-generated code.
+                              '**/*_ViewBinding*.*', // Butterknife auto-generated code.
+                              '**/AutoValue_*.*', // AutoValue auto-generated code.
+                              '**/R2.class', // Butterknife auto-generated code.
+                              '**/R2$*.class', // Butterknife auto-generated code.
+                              '**/com/example/mock/**' // Ignore collection of mock data, that is added in debug and qa builds.
+            ]
+
+            def koltinClasses = []
+            def javaClasses = []
+            def executions = []
+            def mainSrc = []
+
+            modules.forEach({ moduleName ->
+                koltinClasses.add(
+                        fileTree(dir: "$project.rootDir/$moduleName/build/tmp/kotlin-classes/debug", excludes: fileFilter)
+                )
+                javaClasses.add(
+                        fileTree(dir: "$project.rootDir/$moduleName/build/intermediates/classes/debug", excludes: fileFilter)
+                )
+                mainSrc.add(
+                        "$project.rootDir/$moduleName/src/main/java"
+                )
+                executions.add("$moduleName/build/jacoco/testDebugUnitTest.exec")
+            })
+
+            println("")
+
+            // Create coverage task for unit tests of form 'test<Flavor><BuildType>Coverage' depending on 'test<Flavor><BuildType>UnitTest'
+            task "${unitTestCoverageTaskName}"(type: JacocoReport, dependsOn: "$testTaskName") {
+                group = 'Reporting'
+                description = "Generate Jacoco coverage reports for the ${sourceName.capitalize()} build. Only unit tests."
+
+                for (module in modules) {
+                    dependsOn(":$module:testDebugUnitTest")
+                }
+
+                println("jacoco: running task: \"$unitTestCoverageTaskName\", source name: \"${sourceName.capitalize()}\"")
+
+                reports {
+                    xml.enabled = true
+                    html.enabled = true
+                }
+
+                sourceDirectories = files(mainSrc)
+                classDirectories = files(files(koltinClasses), files(javaClasses))
+                executionData = fileTree(dir: project.rootDir, includes: executions)
+
+                println("")
+            }
+
+            task "${unitAndEspressoTestCoverageTaskName}"(type: JacocoReport, dependsOn: ["$testTaskName", "createDebugCoverageReport"]) {
+                group = 'Reporting'
+                description = "Generate Jacoco coverage reports for the ${sourceName.capitalize()} build. Both unit and espresso tests."
+
+                for (module in modules) {
+                    dependsOn(":$module:testDebugUnitTest")
+                }
+
+                reports {
+                    xml.enabled = true
+                    html.enabled = true
+                }
+
+                executions.add("outputs/code-coverage/connected/*coverage.ec")
+
+                sourceDirectories = files(mainSrc)
+                classDirectories = files(files(koltinClasses), files(javaClasses))
+                executionData = fileTree(dir: project.rootDir, includes: executions)
+
+                println("")
+            }
+        }
+    }
+}

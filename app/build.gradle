@@ -1,0 +1,129 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-allopen'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs"
+
+
+apply from: '../buildscript/gradle/jacoco_config.gradle'
+apply from: '../buildscript/gradle/jacoco.gradle'
+
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    defaultConfig {
+        applicationId "auto.testtask"
+
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        buildToolsVersion rootProject.buildToolsVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+
+        multiDexEnabled true
+
+        vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_URL", "\"http://api-aws-eu-qa-1.auto1-test.com\"")
+    }
+    buildTypes {
+
+
+        release {
+            minifyEnabled true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    testOptions {
+        animationsDisabled = true
+
+        unitTests {
+            includeAndroidResources = true
+        }
+
+        unitTests.all {
+            testLogging {
+                outputs.upToDateWhen { false }
+                events "passed", "failed", "standardError"
+                showCauses true
+                showExceptions true
+            }
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+}
+
+dependencies {
+    api project(path: ':domain')
+    api project(path: ':utilities')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation project(':test_utilities')
+    androidTestImplementation project(':test_utilities')
+    implementation kotlinDependencies.kotlin
+    implementation kotlinDependencies.androidKtx
+    implementation supportDependencies.design
+    implementation supportDependencies.multidex
+    implementation supportDependencies.appCompat
+    implementation supportDependencies.constraintLayout
+    kapt daggerDependencies.daggerAndroidSupportProcessor
+    kapt daggerDependencies.daggerCompiler
+    implementation lifecycleDependencies.java8
+    implementation lifecycleDependencies.extensions
+    implementation lifecycleDependencies.runtime
+    implementation navigationDependencies.fragment
+    implementation navigationDependencies.ui
+    kapt lifecycleDependencies.compiler
+    kapt kotlinDependencies.databinding
+    implementation libraries.datePicker
+    androidTestImplementation testDependencies.junit
+    androidTestImplementation testDependencies.assertions
+    androidTestImplementation testDependencies.testRunner
+    androidTestImplementation testDependencies.testRules
+    androidTestImplementation supportDependencies.design
+    androidTestImplementation supportDependencies.appCompat
+    androidTestImplementation navigationDependencies.testing
+    androidTestImplementation mockitoDependencies.mockitoAndroid
+    androidTestImplementation mockitoDependencies.mockitoCore, {
+        exclude group: 'net.bytebuddy'
+    }
+    androidTestImplementation espressoDependencies.espressoIntents
+    androidTestImplementation(espressoDependencies.espressoCore, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    })
+    androidTestImplementation(espressoDependencies.espressoContrib, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    })
+    androidTestImplementation(testDependencies.arch, {
+        exclude group: 'com.android.support', module: 'support-compat'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-core-utils'
+    })
+    testImplementation mockitoDependencies.mockitoCore
+    testImplementation testDependencies.okhttpMockWebServer
+    testImplementation testDependencies.assertions
+    testImplementation(testDependencies.arch, {
+        exclude group: 'com.android.support', module: 'support-compat'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-core-utils'
+    })
+}

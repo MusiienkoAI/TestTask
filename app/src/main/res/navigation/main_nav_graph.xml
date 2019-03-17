@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            app:startDestination="@id/manufactures_fragment">
+
+    <fragment
+            android:id="@+id/manufactures_fragment"
+            android:name="auto.testtask.ui.fragments.ManufacturesFragment"
+            android:label="ManufacturesFragment"
+            tools:layout="@layout/fragment_manufactures">
+
+        <!--<action-->
+        <!--android:id="@+id/show_login_screen"-->
+        <!--app:popUpTo="@id/splash_screen_fragment"-->
+        <!--app:popUpToInclusive="true" />-->
+
+    </fragment>
+
+
+</navigation>

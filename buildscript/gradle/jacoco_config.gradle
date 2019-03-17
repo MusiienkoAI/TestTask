@@ -1,0 +1,16 @@
+apply plugin: 'jacoco'
+
+android {
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses true
+            }
+        }
+    }
+}
+
+// Jacoco version to use. See https://github.com/jacoco/jacoco/releases
+jacoco {
+    toolVersion = "0.8.1"
+}
