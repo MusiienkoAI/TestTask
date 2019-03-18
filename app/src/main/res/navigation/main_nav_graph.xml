@@ -1,21 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            app:startDestination="@id/manufactures_fragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/manufactures_fragment">
 
     <fragment
-            android:id="@+id/manufactures_fragment"
-            android:name="auto.testtask.ui.fragments.ManufacturesFragment"
-            android:label="ManufacturesFragment"
-            tools:layout="@layout/fragment_manufactures">
+        android:id="@+id/manufactures_fragment"
+        android:name="auto.testtask.ui.fragments.ManufacturesFragment"
+        android:label="ManufacturesFragment"
+        tools:layout="@layout/fragment_manufactures">
 
-        <!--<action-->
-        <!--android:id="@+id/show_login_screen"-->
-        <!--app:popUpTo="@id/splash_screen_fragment"-->
-        <!--app:popUpToInclusive="true" />-->
+        <action
+            android:id="@+id/show_main_types_fragment"
+            app:destination="@id/main_types_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/manufactures_fragment">
+
+            <argument
+                android:name="manufacture_id"
+                app:argType="String" />
+        </action>
 
     </fragment>
 
+
+    <fragment
+        android:id="@+id/main_types_fragment"
+        android:name="auto.testtask.ui.fragments.MainTypesFragment"
+        android:label="MainTypesFragment"
+        tools:layout="@layout/fragment_manufactures">
+
+        <argument
+            android:name="manufacture_id"
+            app:argType="String" />
+
+        <action
+            android:id="@+id/show_build_dates_fragment"
+            app:destination="@id/build_dates_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/main_types_fragment">
+            <argument
+                android:name="manufacture_id"
+                app:argType="String" />
+
+            <argument
+                android:name="main_type_id"
+                app:argType="String" />
+        </action>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/build_dates_fragment"
+        android:name="auto.testtask.ui.fragments.BuildDatesFragment"
+        android:label="BuildDatesFragment"
+        tools:layout="@layout/fragment_manufactures">
+
+        <argument
+            android:name="manufacture_id"
+            app:argType="String" />
+
+        <argument
+            android:name="main_type_id"
+            app:argType="String" />
+
+        <action
+            android:id="@+id/show_summary_fragment"
+            app:destination="@id/summary_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/build_dates_fragment">
+            <argument
+                android:name="manufacture_id"
+                app:argType="String" />
+
+            <argument
+                android:name="main_type_id"
+                app:argType="String" />
+
+            <argument
+                android:name="build_date"
+                app:argType="String" />
+        </action>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/summary_fragment"
+        android:name="auto.testtask.ui.fragments.SummaryFragment"
+        android:label="SummaryFragment"
+        tools:layout="@layout/fragment_summary">
+        <argument
+            android:name="manufacture_id"
+            app:argType="String" />
+
+        <argument
+            android:name="main_type_id"
+            app:argType="String" />
+
+        <argument
+            android:name="build_date"
+            app:argType="String" />
+
+    </fragment>
 
 </navigation>

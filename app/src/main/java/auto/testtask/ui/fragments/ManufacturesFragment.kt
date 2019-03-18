@@ -38,8 +38,8 @@ class ManufacturesFragment : BaseFragment(), Injectable, IManufacturerCallback {
         }
     }
 
-    override fun onManufacturerClick() {
-
+    override fun onManufacturerPick(manufactureId : String) {
+        navController().navigate(ManufacturesFragmentDirections.showMainTypesFragment(manufactureId))
     }
 
     override fun subscribeToModel() {

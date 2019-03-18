@@ -16,11 +16,11 @@ import io.reactivex.Single
 
 interface ICarInteractor : IBaseInteractor {
 
-    fun getManufactures(manufacturesRequest: ManufacturesRequest): Observable<ManufactureResponse>
+    fun getManufactures(manufacturesRequest: ManufacturesRequest): Single<ManufactureResponse>
 
-    fun getMainTypes(mainTypeRequest: MainTypeRequest) : Observable<MainTypesResponse>
+    fun getMainTypes(mainTypeRequest: MainTypeRequest) : Single<MainTypesResponse>
 
-    fun getBuildDates(buildDateRequest: BuildDateRequest) : Observable<BuildDatesResponse>
+    fun getBuildDates(buildDateRequest: BuildDateRequest) : Single<BuildDatesResponse>
 
 
 

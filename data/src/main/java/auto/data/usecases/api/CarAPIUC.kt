@@ -21,16 +21,16 @@ import javax.inject.Inject
 @OpenForTesting
 class CarAPIUC @Inject constructor(private val carApiService: CarApiService) : BaseUseCase() {
 
-    fun getManufactures(manufacturesRequest: ManufacturesRequest): Observable<Resource<ManufactureResponse>> {
+    fun getManufactures(manufacturesRequest: ManufacturesRequest): Single<Resource<ManufactureResponse>> {
         Timber.d("getManufactures")
         return carApiService.getManufacturers(manufacturesRequest.page,manufacturesRequest.pageSize)
     }
 
-    fun getMainTypes(mainTypeRequest: MainTypeRequest): Observable<Resource<MainTypesResponse>>{
+    fun getMainTypes(mainTypeRequest: MainTypeRequest): Single<Resource<MainTypesResponse>>{
         return carApiService.getMainTypes(mainTypeRequest)
     }
 
-    fun getBuildDates(buildDateRequest: BuildDateRequest) :  Observable<Resource<BuildDatesResponse>>{
+    fun getBuildDates(buildDateRequest: BuildDateRequest) :  Single<Resource<BuildDatesResponse>>{
         return carApiService.getBuildDates(buildDateRequest)
     }
 }

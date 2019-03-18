@@ -1,5 +1,5 @@
 package auto.testtask.bindings.callbacks
 
 interface IManufacturerCallback{
-    fun onManufacturerClick()
+    fun onManufacturerPick(manufactureId : String)
 }

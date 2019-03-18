@@ -1,7 +1,5 @@
 package auto.data.services.api
 
-import auto.data.entities.common.MainType
-import auto.data.entities.common.Manufacturer
 import auto.data.entities.requests.BuildDateRequest
 import auto.data.entities.requests.MainTypeRequest
 import auto.data.entities.requests.ManufacturesRequest
@@ -20,12 +18,12 @@ import retrofit2.http.Query
 interface CarApiService {
 
     @GET("v1/car-types/manufacturer")
-    fun getManufacturers(@Query("page") page: Int, @Query("pageSize") pageSize: Int): Observable<Resource<ManufactureResponse>>
+    fun getManufacturers(@Query("page") page: Int, @Query("pageSize") pageSize: Int): Single<Resource<ManufactureResponse>>
 
     @GET("v1/car-types/main-types")
-    fun getMainTypes(@Body mainTypeRequest: MainTypeRequest): Observable<Resource<MainTypesResponse>>
+    fun getMainTypes(@Body mainTypeRequest: MainTypeRequest): Single<Resource<MainTypesResponse>>
 
     @GET("v1/car-types/built-dates")
-    fun getBuildDates(@Body buildDateRequest: BuildDateRequest): Observable<Resource<BuildDatesResponse>>
+    fun getBuildDates(@Body buildDateRequest: BuildDateRequest): Single<Resource<BuildDatesResponse>>
 
 }

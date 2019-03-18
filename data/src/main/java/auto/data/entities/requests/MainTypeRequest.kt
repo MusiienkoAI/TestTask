@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MainTypeRequest (
-    @SerializedName("manufacturer") val manufacturer: Int,
+    @SerializedName("manufacturer") val manufacturer: String,
     @SerializedName("page") val page: Int=0,
     @SerializedName("pageSize") val pageSize: Int = 10
 ): Parcelable

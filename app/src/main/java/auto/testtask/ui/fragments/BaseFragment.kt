@@ -62,4 +62,8 @@ abstract class BaseFragment : Fragment() {
     private fun processResponseStatus(state: State?) {
         baseActivity.processResponseStatus(state)
     }
+
+    protected fun popBackStack() {
+        navController().popBackStack()
+    }
 }

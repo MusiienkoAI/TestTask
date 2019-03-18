@@ -31,7 +31,7 @@ class CarInteractorImpl @Inject constructor(
     private val carAPIUC: CarAPIUC
 ) : BaseInteractorImpl(schedulers), ICarInteractor {
 
-    override fun getManufactures(manufacturesRequest: ManufacturesRequest): Observable<ManufactureResponse> {
+    override fun getManufactures(manufacturesRequest: ManufacturesRequest): Single<ManufactureResponse> {
         Timber.d("getManufactures")
         return carAPIUC.getManufactures(manufacturesRequest)
             .fromResult()
@@ -39,14 +39,14 @@ class CarInteractorImpl @Inject constructor(
             .observeOn(schedulers.ui())
     }
 
-    override fun getMainTypes(mainTypeRequest: MainTypeRequest): Observable<MainTypesResponse> {
+    override fun getMainTypes(mainTypeRequest: MainTypeRequest): Single<MainTypesResponse> {
         return carAPIUC.getMainTypes(mainTypeRequest)
             .fromResult()
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.ui())
     }
 
-    override fun getBuildDates(buildDateRequest: BuildDateRequest): Observable<BuildDatesResponse> {
+    override fun getBuildDates(buildDateRequest: BuildDateRequest): Single<BuildDatesResponse> {
         return carAPIUC.getBuildDates(buildDateRequest)
             .fromResult()
             .subscribeOn(schedulers.io())

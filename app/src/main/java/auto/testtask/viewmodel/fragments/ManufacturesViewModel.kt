@@ -24,8 +24,8 @@ class ManufacturesViewModel @Inject constructor(
 
     fun requestManufactures() {
         if (manufactures.value.isNullOrEmpty())
-            carInterractor.getManufactures(ManufacturesRequest(page = currentPage,pageSize = pageSize)).safeSubscribe(
-                createObserver(
+            carInterractor.getManufactures(ManufacturesRequest(page = currentPage,pageSize = pageSize)).subscribe(
+                createSingleObserver(
                     next = {
                         currentPage = it.page
                         totalPageCount = it.totalPageCount
@@ -38,8 +38,8 @@ class ManufacturesViewModel @Inject constructor(
     fun requestMoreManufactures(){
         manufactures.value?.let {
             if(it.isPaginationAllowed(totalPageCount,pageSize))
-                carInterractor.getManufactures(ManufacturesRequest(page = currentPage+1,pageSize = pageSize)).safeSubscribe(
-                        createObserver(
+                carInterractor.getManufactures(ManufacturesRequest(page = currentPage+1,pageSize = pageSize)).subscribe(
+                        createSingleObserver(
                                 next = {
                                     currentPage = it.page
                                     totalPageCount = it.totalPageCount

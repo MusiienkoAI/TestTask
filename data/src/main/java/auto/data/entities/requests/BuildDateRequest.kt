@@ -7,6 +7,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class BuildDateRequest (
-    @SerializedName("manufacturer") val manufacturer: Int,
+    @SerializedName("manufacturer") val manufacturer: String,
     @SerializedName("main-type") val mainType: String
 ): Parcelable
