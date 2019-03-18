@@ -14,6 +14,7 @@ import auto.utilities.actions.Subscribe
 
 
 import io.reactivex.CompletableObserver
+import io.reactivex.Observer
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import org.reactivestreams.Subscriber
@@ -85,6 +86,34 @@ abstract class BaseViewModel : ViewModel() {
             }
         }
     }
+
+
+    protected fun <T> createObserver(
+        liveData: MutableLiveData<Resource<T>>? = null,
+        next: Next<T>? = null,
+        error: Error? = null,
+        complete: Complete? = null,
+        triggerLoadingState: Boolean = true
+    ): Observer<T> {
+        return object : Observer<T> {
+            override fun onComplete() {
+                handleOnComplete(liveData, complete)
+            }
+
+            override fun onNext(t: T) {
+                handleOnNext(t, liveData, next, triggerLoadingState)
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                handleOnSubscribe(d, liveData, triggerLoadingState)
+            }
+
+            override fun onError(e: Throwable) {
+                handleOnError(e, liveData, error, triggerLoadingState)
+            }
+        }
+    }
+
 
     protected fun <T> createSubscriber(
         liveData: MutableLiveData<Resource<T>>? = null,

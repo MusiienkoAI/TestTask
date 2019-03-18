@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TestTask</string>
+
+    <string name="manufactures_title">Pick the Manufacture</string>
 </resources>

@@ -9,8 +9,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.text.Spanned
-
-
+import androidx.recyclerview.widget.RecyclerView
 
 
 @SuppressLint("NewApi")
@@ -30,35 +29,53 @@ fun keyListener(
     }
 }
 
+fun pagintantionListener(
+    onDragging: (() -> Unit)? = null,
+    onIdle: (() -> Unit)? = null,
+    onSettling: (() -> Unit)? = null,
+    onScrolledUp: (() -> Unit)? = null,
+    onScrolledDown: (() -> Unit)? = null,
+    onScrolledToTop: (() -> Unit)? = null,
+    onScrolledToBottom: (() -> Unit)? = null
+): RecyclerView.OnScrollListener {
+    return  object : RecyclerView.OnScrollListener(){
+        private var isOnTopOrBottom = false
 
-fun PhoneMaskTextWatcher(view: EditText): TextWatcher {
-    return object : TextWatcher {
-        var len = 0
-
-        override fun afterTextChanged(s: Editable?) {
-            val i = view.text.toString().length
-            if (i < 5)
-                len = 0
-            if (i == 5 && len < 6) {
-                len = 6
-                val ss = s.toString()
-                val first = ss.substring(0, ss.length - 1)
-                val last = ss.substring(ss.length - 1)
-                view.setText("$first-$last")
-                view.setSelection(view.text.toString().length)
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            if (!recyclerView.canScrollVertically(-1)) {
+                isOnTopOrBottom = true
+                onScrolledToTop?.invoke()
+            } else if (!recyclerView.canScrollVertically(1)) {
+                isOnTopOrBottom = true
+                onScrolledToBottom?.invoke()
+            } else if (dy < 0) {
+                if (isOnTopOrBottom) {
+                    onDragging?.invoke()
+                }
+                onScrolledUp?.invoke()
+                isOnTopOrBottom = false
+            } else if (dy > 0) {
+                if (isOnTopOrBottom) {
+                    onDragging?.invoke()
+                }
+                onScrolledDown?.invoke()
+                isOnTopOrBottom = false
             }
-
         }
 
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-        }
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            when (newState) {
+                RecyclerView.SCROLL_STATE_IDLE -> onIdle?.invoke()
+                RecyclerView.SCROLL_STATE_DRAGGING -> if (!isOnTopOrBottom)
+                    onDragging?.invoke()
+                RecyclerView.SCROLL_STATE_SETTLING -> onSettling?.invoke()
+            }
         }
     }
 }
+
+
 
 
 fun MaxLinesInputFilter(maxLines: Int): InputFilter {

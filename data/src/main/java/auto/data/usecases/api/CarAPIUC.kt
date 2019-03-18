@@ -12,6 +12,7 @@ import auto.data.services.api.CarApiService
 import auto.data.usecases.BaseUseCase
 import auto.utilities.entities.Resource
 import auto.utilities.testing.OpenForTesting
+import io.reactivex.Observable
 import io.reactivex.Single
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,16 +21,16 @@ import javax.inject.Inject
 @OpenForTesting
 class CarAPIUC @Inject constructor(private val carApiService: CarApiService) : BaseUseCase() {
 
-    fun getManufactures(manufacturesRequest: ManufacturesRequest): Single<Resource<ManufactureResponse>> {
+    fun getManufactures(manufacturesRequest: ManufacturesRequest): Observable<Resource<ManufactureResponse>> {
         Timber.d("getManufactures")
         return carApiService.getManufacturers(manufacturesRequest.page,manufacturesRequest.pageSize)
     }
 
-    fun getMainTypes(mainTypeRequest: MainTypeRequest): Single<Resource<MainTypesResponse>>{
+    fun getMainTypes(mainTypeRequest: MainTypeRequest): Observable<Resource<MainTypesResponse>>{
         return carApiService.getMainTypes(mainTypeRequest)
     }
 
-    fun getBuildDates(buildDateRequest: BuildDateRequest) :  Single<Resource<BuildDatesResponse>>{
+    fun getBuildDates(buildDateRequest: BuildDateRequest) :  Observable<Resource<BuildDatesResponse>>{
         return carApiService.getBuildDates(buildDateRequest)
     }
 }
