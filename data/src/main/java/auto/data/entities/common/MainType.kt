@@ -7,5 +7,5 @@ data class MainType(
     @SerializedName("name") val name: String
 
     ) {
-    val manufacturer: String? = null
+    var manufacturer: String? = null
 }

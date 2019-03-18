@@ -5,6 +5,8 @@ import auto.data.entities.common.Manufacturer
 import auto.data.entities.requests.BuildDateRequest
 import auto.data.entities.requests.MainTypeRequest
 import auto.data.entities.requests.ManufacturesRequest
+import auto.data.entities.responses.BuildDatesResponse
+import auto.data.entities.responses.MainTypesResponse
 import auto.data.entities.responses.ManufactureResponse
 import auto.data.usecases.api.CarAPIUC
 import auto.utilities.SchedulersFacade
@@ -36,14 +38,14 @@ class CarInteractorImpl @Inject constructor(
             .observeOn(schedulers.ui())
     }
 
-    override fun getMainTypes(mainTypeRequest: MainTypeRequest): Single<List<MainType>> {
+    override fun getMainTypes(mainTypeRequest: MainTypeRequest): Single<MainTypesResponse> {
         return carAPIUC.getMainTypes(mainTypeRequest)
             .fromResult()
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.ui())
     }
 
-    override fun getBuildDates(buildDateRequest: BuildDateRequest): Single<List<String>> {
+    override fun getBuildDates(buildDateRequest: BuildDateRequest): Single<BuildDatesResponse> {
         return carAPIUC.getBuildDates(buildDateRequest)
             .fromResult()
             .subscribeOn(schedulers.io())

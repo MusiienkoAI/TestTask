@@ -5,6 +5,8 @@ import auto.data.entities.common.Manufacturer
 import auto.data.entities.requests.BuildDateRequest
 import auto.data.entities.requests.MainTypeRequest
 import auto.data.entities.requests.ManufacturesRequest
+import auto.data.entities.responses.BuildDatesResponse
+import auto.data.entities.responses.MainTypesResponse
 import auto.data.entities.responses.ManufactureResponse
 import auto.data.services.api.CarApiService
 import auto.data.usecases.BaseUseCase
@@ -23,11 +25,11 @@ class CarAPIUC @Inject constructor(private val carApiService: CarApiService) : B
         return carApiService.getManufacturers(manufacturesRequest.page,manufacturesRequest.pageSize)
     }
 
-    fun getMainTypes(mainTypeRequest: MainTypeRequest): Single<Resource<List<MainType>>>{
+    fun getMainTypes(mainTypeRequest: MainTypeRequest): Single<Resource<MainTypesResponse>>{
         return carApiService.getMainTypes(mainTypeRequest)
     }
 
-    fun getBuildDates(buildDateRequest: BuildDateRequest) :  Single<Resource<List<String>>>{
+    fun getBuildDates(buildDateRequest: BuildDateRequest) :  Single<Resource<BuildDatesResponse>>{
         return carApiService.getBuildDates(buildDateRequest)
     }
 }

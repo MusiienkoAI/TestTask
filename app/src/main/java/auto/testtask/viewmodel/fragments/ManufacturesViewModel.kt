@@ -10,8 +10,8 @@ class ManufacturesViewModel @Inject constructor(
 ) : BaseViewModel() {
 
   fun requestManufactures(){
-      carInterractor.getManufactures(ManufacturesRequest()).subscribe(createSingleObserver(next = {
-          it.getManufactures()
+      carInterractor.getManufactures(ManufacturesRequest(page = 7)).subscribe(createSingleObserver(next = {
+
       }))
   }
 }
