@@ -13,29 +13,16 @@ class MainTypesViewModel@Inject constructor(
 ) : BaseViewModel() {
 
 
-    private var currentPage = 0
+    private var currentPage = -1
 
     private var totalPageCount = 1
 
-    private val pageSize = 10
+    private val pageSize = 15
 
 
-    var mainTypes = MutableLiveData<ArrayList<MainType>>()
+    var mainTypes = MutableLiveData<ArrayList<MainType>>().apply {value = ArrayList()  }
 
     fun requestMainTypes(manufactureId: String) {
-        if (mainTypes.value.isNullOrEmpty())
-            carInterractor.getMainTypes(MainTypeRequest(page = currentPage,pageSize = pageSize,manufacturer = manufactureId)).subscribe(
-                    createSingleObserver(
-                            next = {
-                                currentPage = it.page
-                                totalPageCount = it.totalPageCount
-                                mainTypes.value = (it.mainTypes)
-                            })
-            )
-    }
-
-
-    fun requestMoreMainTypes(manufactureId: String){
         mainTypes.value?.let {
             if(it.isPaginationAllowed(totalPageCount,pageSize))
                 carInterractor.getMainTypes(MainTypeRequest(page = currentPage+1,pageSize = pageSize,manufacturer = manufactureId)).subscribe(
@@ -51,4 +38,7 @@ class MainTypesViewModel@Inject constructor(
                 )
         }
     }
+
+
+
 }

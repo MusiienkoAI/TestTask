@@ -54,7 +54,7 @@ class MainTypesFragment : BaseFragment(), Injectable, IMainTypesCallback{
         binding.rvMainTypes.addOnScrollListener(
                 pagintantionListener(
                         onScrolledToBottom = {
-                            viewModel.requestMoreMainTypes(args.manufactureId)
+                            viewModel.requestMainTypes(args.manufactureId)
                         }))
         binding.rvMainTypes.adapter = adapter
     }

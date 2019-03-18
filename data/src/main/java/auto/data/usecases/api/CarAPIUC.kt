@@ -27,10 +27,10 @@ class CarAPIUC @Inject constructor(private val carApiService: CarApiService) : B
     }
 
     fun getMainTypes(mainTypeRequest: MainTypeRequest): Single<Resource<MainTypesResponse>>{
-        return carApiService.getMainTypes(mainTypeRequest)
+        return carApiService.getMainTypes(mainTypeRequest.page,mainTypeRequest.pageSize,mainTypeRequest.manufacturer)
     }
 
     fun getBuildDates(buildDateRequest: BuildDateRequest) :  Single<Resource<BuildDatesResponse>>{
-        return carApiService.getBuildDates(buildDateRequest)
+        return carApiService.getBuildDates(buildDateRequest.manufacturer,buildDateRequest.mainType)
     }
 }

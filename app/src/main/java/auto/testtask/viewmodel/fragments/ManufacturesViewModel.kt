@@ -13,29 +13,16 @@ class ManufacturesViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 
-    private var currentPage = 0
+    private var currentPage = -1
 
     private var totalPageCount = 1
 
-    private val pageSize = 10
+    private val pageSize = 15
 
 
-    var manufactures = MutableLiveData<ArrayList<Manufacturer>>()
+    var manufactures = MutableLiveData<ArrayList<Manufacturer>>().apply {value = ArrayList()  }
 
     fun requestManufactures() {
-        if (manufactures.value.isNullOrEmpty())
-            carInterractor.getManufactures(ManufacturesRequest(page = currentPage,pageSize = pageSize)).subscribe(
-                createSingleObserver(
-                    next = {
-                        currentPage = it.page
-                        totalPageCount = it.totalPageCount
-                        manufactures.value = (it.manufacturers)
-                    })
-            )
-    }
-
-
-    fun requestMoreManufactures(){
         manufactures.value?.let {
             if(it.isPaginationAllowed(totalPageCount,pageSize))
                 carInterractor.getManufactures(ManufacturesRequest(page = currentPage+1,pageSize = pageSize)).subscribe(
@@ -51,6 +38,8 @@ class ManufacturesViewModel @Inject constructor(
                 )
         }
     }
+
+
 
 
 

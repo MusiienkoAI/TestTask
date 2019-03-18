@@ -54,7 +54,7 @@ class ManufacturesFragment : BaseFragment(), Injectable, IManufacturerCallback {
         binding.rvManufactures.addOnScrollListener(
                 pagintantionListener(
                         onScrolledToBottom = {
-                            viewModel.requestMoreManufactures()
+                            viewModel.requestManufactures()
                         }))
         binding.rvManufactures.adapter = adapter
     }

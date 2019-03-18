@@ -21,7 +21,7 @@
 
             <argument
                 android:name="manufacture_id"
-                app:argType="String" />
+                app:argType="string" />
         </action>
 
     </fragment>
@@ -35,7 +35,7 @@
 
         <argument
             android:name="manufacture_id"
-            app:argType="String" />
+            app:argType="string" />
 
         <action
             android:id="@+id/show_build_dates_fragment"
@@ -47,11 +47,11 @@
             app:popUpTo="@id/main_types_fragment">
             <argument
                 android:name="manufacture_id"
-                app:argType="String" />
+                app:argType="string" />
 
             <argument
                 android:name="main_type_id"
-                app:argType="String" />
+                app:argType="string" />
         </action>
 
     </fragment>
@@ -65,11 +65,11 @@
 
         <argument
             android:name="manufacture_id"
-            app:argType="String" />
+            app:argType="string" />
 
         <argument
             android:name="main_type_id"
-            app:argType="String" />
+            app:argType="string" />
 
         <action
             android:id="@+id/show_summary_fragment"
@@ -81,15 +81,15 @@
             app:popUpTo="@id/build_dates_fragment">
             <argument
                 android:name="manufacture_id"
-                app:argType="String" />
+                app:argType="string" />
 
             <argument
                 android:name="main_type_id"
-                app:argType="String" />
+                app:argType="string" />
 
             <argument
                 android:name="build_date"
-                app:argType="String" />
+                app:argType="string" />
         </action>
 
     </fragment>
@@ -102,15 +102,15 @@
         tools:layout="@layout/fragment_summary">
         <argument
             android:name="manufacture_id"
-            app:argType="String" />
+            app:argType="string" />
 
         <argument
             android:name="main_type_id"
-            app:argType="String" />
+            app:argType="string" />
 
         <argument
             android:name="build_date"
-            app:argType="String" />
+            app:argType="string" />
 
     </fragment>
 

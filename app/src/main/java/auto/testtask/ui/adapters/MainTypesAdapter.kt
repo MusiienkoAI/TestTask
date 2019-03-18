@@ -22,8 +22,10 @@ class MainTypesAdapter(private val iMainTypesCallback: IMainTypesCallback) :
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val binding = (viewHolder as ManufactureViewHolder).binding
-        val manufacture = items[position]
-        binding.tvName.text = manufacture.name
+        val mainType = items[position]
+        binding.id = mainType.id
+        binding.listener = iMainTypesCallback
+        binding.tvName.text = mainType.name
     }
 
 

@@ -21,9 +21,9 @@ interface CarApiService {
     fun getManufacturers(@Query("page") page: Int, @Query("pageSize") pageSize: Int): Single<Resource<ManufactureResponse>>
 
     @GET("v1/car-types/main-types")
-    fun getMainTypes(@Body mainTypeRequest: MainTypeRequest): Single<Resource<MainTypesResponse>>
+    fun getMainTypes(@Query("page") page: Int, @Query("pageSize") pageSize: Int, @Query("manufacturer")manufacturer : String): Single<Resource<MainTypesResponse>>
 
     @GET("v1/car-types/built-dates")
-    fun getBuildDates(@Body buildDateRequest: BuildDateRequest): Single<Resource<BuildDatesResponse>>
+    fun getBuildDates(@Query("manufacturer") manufacturer: String, @Query("main-type") mainType: String): Single<Resource<BuildDatesResponse>>
 
 }

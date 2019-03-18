@@ -22,8 +22,10 @@ class BuildDatesAdapter(private val iBuildDateCallback: IBuildDatesCallback) :
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val binding = (viewHolder as ManufactureViewHolder).binding
-        val manufacture = items[position]
-        binding.tvName.text = manufacture.date
+        val buildDate = items[position]
+        binding.id = buildDate.date
+        binding.listener = iBuildDateCallback
+        binding.tvName.text = buildDate.date
     }
 
 

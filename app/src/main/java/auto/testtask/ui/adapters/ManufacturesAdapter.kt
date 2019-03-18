@@ -24,6 +24,8 @@ class ManufacturesAdapter(private val iManufacturerCallback: IManufacturerCallba
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val binding = (viewHolder as ManufactureViewHolder).binding
         val manufacture = items[position]
+        binding.id = manufacture.id
+        binding.listener = iManufacturerCallback
         binding.tvName.text = manufacture.name
     }
 
