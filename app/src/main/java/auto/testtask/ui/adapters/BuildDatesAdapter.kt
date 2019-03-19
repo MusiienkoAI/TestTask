@@ -3,7 +3,7 @@ package auto.testtask.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import auto.data.entities.common.BuildDate
+import auto.data.entities.room.BuildDate
 import auto.testtask.bindings.callbacks.IBuildDatesCallback
 import auto.testtask.databinding.ItemBuildDateBinding
 

@@ -4,4 +4,9 @@
     <string name="manufactures_title">Pick the Manufacture</string>
     <string name="main_type_title">Pick the Main Type</string>
     <string name="build_date_title">Pick the Build Year</string>
+
+    <string name="summary_title">Summary</string>
+    <string name="summary_manufacture_title">Manufacture:</string>
+    <string name="summary_main_type_title">Main type:</string>
+    <string name="summary_build_date_title">Build date:</string>
 </resources>

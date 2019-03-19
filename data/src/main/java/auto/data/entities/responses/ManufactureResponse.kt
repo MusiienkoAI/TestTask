@@ -1,10 +1,8 @@
 package auto.data.entities.responses
 
-import auto.data.entities.common.Manufacturer
+import auto.data.entities.room.Manufacturer
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
-import org.json.JSONObject
-import timber.log.Timber
 
 data class ManufactureResponse(
     @SerializedName("page") val page: Int,
@@ -19,7 +17,7 @@ data class ManufactureResponse(
         val keys = data.keySet()
         keys.forEach {
             val name = data.get(it).asString
-            list.add(Manufacturer(it,name))
+            list.add(Manufacturer(it, name))
         }
         return list
     }

@@ -1,7 +1,6 @@
 package auto.data.entities.responses
 
-import auto.data.entities.common.MainType
-import auto.data.entities.common.Manufacturer
+import auto.data.entities.room.MainType
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 

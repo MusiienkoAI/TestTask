@@ -1,6 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</LinearLayout>
+
+    <data>
+
+        <variable
+            name="listener"
+            type="auto.testtask.bindings.callbacks.ISummaryCallback" />
+
+        <variable
+            name="viewModel"
+            type="auto.testtask.viewmodel.fragments.SummaryViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:onClick="@{(view)-> listener.onBack()}"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/tv_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/vector_arrow_back" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center_vertical"
+            android:text="@string/summary_title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintLeft_toRightOf="@id/iv_back"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_manufacture_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center_vertical"
+            android:text="@string/summary_manufacture_title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_manufacture_value"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="@{viewModel.manufacture.name}"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/tv_manufacture_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_manufacture_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_main_type_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center_vertical"
+            android:text="@string/summary_main_type_title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_manufacture_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_main_type_value"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center_vertical"
+            android:text="@{viewModel.mainType.name}"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@id/tv_manufacture_value"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_main_type_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_build_date_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center_vertical"
+            android:text="@string/summary_build_date_title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_main_type_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_build_date_value"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center_vertical"
+            android:text="@{viewModel.buildDate.date}"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@id/tv_manufacture_value"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_build_date_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

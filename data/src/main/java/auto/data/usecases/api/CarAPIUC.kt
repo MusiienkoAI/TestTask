@@ -1,7 +1,5 @@
 package auto.data.usecases.api
 
-import auto.data.entities.common.MainType
-import auto.data.entities.common.Manufacturer
 import auto.data.entities.requests.BuildDateRequest
 import auto.data.entities.requests.MainTypeRequest
 import auto.data.entities.requests.ManufacturesRequest
@@ -12,7 +10,6 @@ import auto.data.services.api.CarApiService
 import auto.data.usecases.BaseUseCase
 import auto.utilities.entities.Resource
 import auto.utilities.testing.OpenForTesting
-import io.reactivex.Observable
 import io.reactivex.Single
 import timber.log.Timber
 import javax.inject.Inject

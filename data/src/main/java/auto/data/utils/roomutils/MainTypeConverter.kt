@@ -2,8 +2,7 @@ package auto.data.utils.roomutils
 
 
 import androidx.room.TypeConverter
-import auto.data.entities.common.MainType
-import auto.data.entities.room.CarData
+import auto.data.entities.room.MainType
 import auto.utilities.extensions.fromJson
 import auto.utilities.extensions.toJson
 import com.google.gson.Gson

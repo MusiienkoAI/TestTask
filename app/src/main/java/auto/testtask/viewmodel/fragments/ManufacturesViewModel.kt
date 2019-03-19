@@ -1,11 +1,11 @@
 package auto.testtask.viewmodel.fragments
 
 import androidx.lifecycle.MutableLiveData
-import auto.data.entities.common.Manufacturer
+import auto.data.entities.room.Manufacturer
 import auto.data.entities.requests.ManufacturesRequest
 import auto.domain.interfaces.ICarInteractor
 import auto.testtask.viewmodel.BaseViewModel
-import auto.utilities.extensions.isPaginationAllowed
+import auto.utilities.extensions.isRequestAllowed
 import javax.inject.Inject
 
 class ManufacturesViewModel @Inject constructor(
@@ -24,7 +24,7 @@ class ManufacturesViewModel @Inject constructor(
 
     fun requestManufactures() {
         manufactures.value?.let {
-            if(it.isPaginationAllowed(totalPageCount,pageSize))
+            if(it.isRequestAllowed(totalPageCount,pageSize))
                 carInterractor.getManufactures(ManufacturesRequest(page = currentPage+1,pageSize = pageSize)).subscribe(
                         createSingleObserver(
                                 next = {

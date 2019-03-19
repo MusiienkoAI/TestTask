@@ -3,7 +3,7 @@ package auto.testtask.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import auto.data.entities.common.MainType
+import auto.data.entities.room.MainType
 import auto.testtask.bindings.callbacks.IMainTypesCallback
 import auto.testtask.databinding.ItemMainTypeBinding
 

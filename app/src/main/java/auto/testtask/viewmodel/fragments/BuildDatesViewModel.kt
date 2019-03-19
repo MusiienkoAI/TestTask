@@ -1,10 +1,10 @@
 package auto.testtask.viewmodel.fragments
 
 import androidx.lifecycle.MutableLiveData
-import auto.data.entities.common.BuildDate
-import auto.data.entities.common.MainType
+import auto.data.entities.room.BuildDate
 import auto.data.entities.requests.BuildDateRequest
-import auto.data.entities.requests.MainTypeRequest
+import auto.data.entities.room.MainType
+import auto.data.entities.room.Manufacturer
 import auto.domain.interfaces.ICarInteractor
 import auto.testtask.viewmodel.BaseViewModel
 import javax.inject.Inject
@@ -15,8 +15,13 @@ class BuildDatesViewModel @Inject constructor(
 
 
 
+    var manufacture = MutableLiveData<Manufacturer>()
+    var mainType = MutableLiveData<MainType>()
 
     var buildDates = MutableLiveData<ArrayList<BuildDate>>()
+
+
+
 
     fun requestBuildDates(manufactureId: String, mainTypeId: String) {
         if (buildDates.value.isNullOrEmpty())
@@ -27,6 +32,30 @@ class BuildDatesViewModel @Inject constructor(
                             })
             )
     }
+
+    fun getInfo(manufactureId: String, mainTypeId: String){
+        getManufacturer(manufactureId)
+        getMainType(mainTypeId)
+    }
+
+    private fun getManufacturer(id: String) {
+        carInterractor.getManufacture(id).subscribe(createSingleObserver(
+                next = {
+                    manufacture.value = it
+                }
+        ))
+    }
+
+    private fun getMainType(id: String) {
+        carInterractor.getMainType(id).subscribe(createSingleObserver(
+                next = {
+                    mainType.value = it
+                }
+        ))
+    }
+
+
+
 
 
 }

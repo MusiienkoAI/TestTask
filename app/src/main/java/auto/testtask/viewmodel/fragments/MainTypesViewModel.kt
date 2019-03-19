@@ -1,11 +1,12 @@
 package auto.testtask.viewmodel.fragments
 
 import androidx.lifecycle.MutableLiveData
-import auto.data.entities.common.MainType
+import auto.data.entities.room.MainType
 import auto.data.entities.requests.MainTypeRequest
+import auto.data.entities.room.Manufacturer
 import auto.domain.interfaces.ICarInteractor
 import auto.testtask.viewmodel.BaseViewModel
-import auto.utilities.extensions.isPaginationAllowed
+import auto.utilities.extensions.isRequestAllowed
 import javax.inject.Inject
 
 class MainTypesViewModel@Inject constructor(
@@ -19,12 +20,14 @@ class MainTypesViewModel@Inject constructor(
 
     private val pageSize = 15
 
+    val manufacture = MutableLiveData<Manufacturer>()
+
 
     var mainTypes = MutableLiveData<ArrayList<MainType>>().apply {value = ArrayList()  }
 
     fun requestMainTypes(manufactureId: String) {
         mainTypes.value?.let {
-            if(it.isPaginationAllowed(totalPageCount,pageSize))
+            if(it.isRequestAllowed(totalPageCount,pageSize))
                 carInterractor.getMainTypes(MainTypeRequest(page = currentPage+1,pageSize = pageSize,manufacturer = manufactureId)).subscribe(
                         createSingleObserver(
                                 next = {
@@ -37,6 +40,14 @@ class MainTypesViewModel@Inject constructor(
                                 })
                 )
         }
+    }
+
+    fun getManufacturer(id: String){
+        carInterractor.getManufacture(id).subscribe(createSingleObserver(
+            next = {
+                manufacture.value = it
+            }
+        ))
     }
 
 

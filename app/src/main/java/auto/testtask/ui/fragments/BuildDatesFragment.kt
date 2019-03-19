@@ -27,23 +27,29 @@ class BuildDatesFragment : BaseFragment(), Injectable, IBuildDatesCallback{
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_build_date, container, false)
+        binding.apply {
+            listener = this@BuildDatesFragment
+            lifecycleOwner = this@BuildDatesFragment
+        }
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initRecyclerView()
+        viewModel.requestBuildDates(args.manufactureId,args.mainTypeId)
+        viewModel.getInfo(args.manufactureId,args.mainTypeId)
     }
 
     override fun initViewModel() {
         viewModel = withViewModel(viewModelFactory) {
             subscribeToViewModelEvents(this)
+            binding.viewModel = this
         }
     }
 
 
     override fun subscribeToModel() {
-        viewModel.requestBuildDates(args.manufactureId,args.mainTypeId)
         viewModel.buildDates.observe(this, Observer {
             adapter.update(it)
         })

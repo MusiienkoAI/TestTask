@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
-import auto.data.entities.common.Manufacturer
+import auto.data.entities.room.Manufacturer
 import auto.testtask.bindings.callbacks.IManufacturerCallback
 import auto.testtask.databinding.ItemManufactureBinding
 

@@ -1,7 +1,6 @@
 package auto.data.entities.responses
 
-import auto.data.entities.common.BuildDate
-import auto.data.entities.common.MainType
+import auto.data.entities.room.BuildDate
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 
@@ -15,7 +14,7 @@ class BuildDatesResponse (
             val keys = data.keySet()
             keys.forEach {
                 val name = data.get(it).asString
-                list.add(BuildDate(name))
+                list.add(BuildDate(it,name))
             }
             return list
         }
